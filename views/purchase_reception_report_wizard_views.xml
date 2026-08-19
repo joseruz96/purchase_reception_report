@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_purchase_reception_report_wizard_form" model="ir.ui.view">
+        <field name="name">purchase.reception.report.wizard.form</field>
+        <field name="model">purchase.reception.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Informe de Recepciones de Compra">
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <field name="partner_id" options="{'no_create': True}"/>
+                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                    </group>
+                </group>
+                <div class="alert alert-info" role="alert">
+                    El informe considera recepciones de proveedor realizadas dentro del rango seleccionado.
+                    La columna Guía / Factura se obtiene del campo Observación de la recepción.
+                </div>
+                <footer>
+                    <button name="action_generate_excel"
+                            string="Descargar Excel"
+                            type="object"
+                            class="btn-primary"
+                            icon="fa-file-excel-o"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_purchase_reception_report_wizard" model="ir.actions.act_window">
+        <field name="name">Informe de Recepciones</field>
+        <field name="res_model">purchase.reception.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_purchase_reception_report_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_purchase_reception_report"
+              name="Informe de Recepciones"
+              parent="purchase.menu_purchase_root"
+              action="action_purchase_reception_report_wizard"
+              sequence="85"
+              groups="purchase.group_purchase_user"/>
+</odoo>
